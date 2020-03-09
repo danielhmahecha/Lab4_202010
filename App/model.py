@@ -33,7 +33,7 @@ y otra para géneros
 """
 
 # Construccion de modelos
-
+'''
 def newCatalog():
     """
     Inicializa el catálogo y retorna el catalogo inicializado.
@@ -41,9 +41,26 @@ def newCatalog():
     catalog = {'booksTree':None,'booksList':None}
     catalog['booksTree'] = map.newMap ("BST")
     catalog['booksList'] = lt.newList("ARRAY_LIST")
+    catalog
 
     return catalog
+'''
+def newCatalog():
+    '''
+    Inicializa catalogo
+    '''
+    catalog = {'accidentsDateTree':None}
+    catalog['accidentsDateTree'] = map.newMap('BST')
+    catalog
+    return catalog
 
+def newAccident ( row):
+    accident = {"start_time": row['Start_Time'], "accident_id": row['ID']}
+    return accident
+
+def addAccidentDateMap(catalog, row):
+    accident = newAccident(row)
+    catalog['accidentsDateTree'] = map.put( catalog['accidentsDateTree'], accident['start_time'], accident, greater)
 
 def newBook (row):
     """
@@ -67,6 +84,7 @@ def addBookMap (catalog, row):
     book = newBook(row)
     #catalog['booksTree'] = map.put(catalog['booksTree'], int(book['book_id']), book, greater)
     catalog['booksTree']  = map.put(catalog['booksTree'] , book['title'], book, greater)
+  
 
 
 # Funciones de consulta

@@ -51,7 +51,7 @@ def compareratings (movie1, movie2):
 
 
 # Funciones para la carga de datos 
-
+'''
 def loadBooks (catalog, sep=','):
     """
     Carga los libros del archivo.  Por cada libro se toman sus autores y por 
@@ -71,8 +71,28 @@ def loadBooks (catalog, sep=','):
             model.addBookMap(catalog, row)
     t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución carga libros:",t1_stop-t1_start," segundos")   
+'''
 
-
+def loadAccidents (catalog, sep=','):
+    """
+    Carga los libros del archivo.  Por cada libro se toman sus autores y por 
+    cada uno de ellos, se crea un arbol de autores, a dicho autor y una
+    referencia al libro que se esta procesando.
+    """
+    t1_start = process_time() #tiempo inicial
+    accidentsfile = cf.data_dir + 'us_accidents_small.csv'
+    dialect = csv.excel()
+    dialect.delimiter=sep
+    with open(accidentsfile, encoding="utf-8-sig") as csvfile:
+        spamreader = csv.DictReader(csvfile, dialect=dialect)
+        for row in spamreader: 
+            # Se adiciona el libro a la lista de libros
+            #model.addBookList(catalog, row)
+            # Se adiciona el libro al mapa de libros (key=title)
+            #model.addBookMap(catalog, row)
+            model.addAccidentDateMap(catalog, row)
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución carga libros:",t1_stop-t1_start," segundos")   
 
 def initCatalog ():
     """
@@ -88,7 +108,7 @@ def loadData (catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    loadBooks(catalog)    
+    loadAccidents(catalog)    
 
 # Funciones llamadas desde la vista y enviadas al modelo
 

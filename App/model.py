@@ -10,7 +10,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will b(base) daniel@daniel-Lenovo-IdeaPad-S340-14API:~/Documene useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -21,9 +21,11 @@
 
 
 import config as cf
+from datetime import datetime
 from ADT import list as lt
 from ADT import orderedmap as map
 from DataStructures import listiterator as it
+
 
 
 """
@@ -45,22 +47,21 @@ def newCatalog():
 
     return catalog
 '''
+
 def newCatalog():
     '''
     Inicializa catalogo
     '''
     catalog = {'accidentsDateTree':None}
-    catalog['accidentsDateTree'] = map.newMap('BST')
+    catalog['accidentsDateTree'] = map.newMap('RBT')
     catalog
     return catalog
 
-def newAccident ( row):
-    accident = {"start_time": row['Start_Time'], "accident_id": row['ID']}
-    return accident
-
-def addAccidentDateMap(catalog, row):
-    accident = newAccident(row)
-    catalog['accidentsDateTree'] = map.put( catalog['accidentsDateTree'], accident['start_time'], accident, greater)
+def newCatalog_2 ():
+    catalog = {'AccidentsTree': None, 'AccidentsList': None}
+    catalog['AccidentsTree'] = map.newMap ("RBT")
+    catalog['AccidentsList'] = lt.newList("ARRAY_LIST")
+    return catalog
 
 def newBook (row):
     """
@@ -69,6 +70,19 @@ def newBook (row):
     book = {"book_id": row['book_id'], "title":row['title'], "average_rating":row['average_rating'], "ratings_count":row['ratings_count']}
     return book
 
+def newAccident (row):
+    id = str(row['ID'])
+    sub = id[2:]
+    subnum = int(sub)
+    if (subnum > 999999):
+        sub = id[-6:]
+        subnum = int (sub)
+
+    string = str(row['Start_Time'])+":"+str(subnum)
+    dateAcc = datetime.strptime(string, '%Y-%m-%d %H:%M:%S:%f')
+    accident = {'ID' : row['ID'], 'Date_Hour': dateAcc}
+    return accident
+
 def addBookList (catalog, row):
     """
     Adiciona libro a la lista
@@ -76,6 +90,20 @@ def addBookList (catalog, row):
     books = catalog['booksList']
     book = newBook(row)
     lt.addLast(books, book)
+
+def addAccidentList (catalog,row):
+    accidents = catalog['AccidentsList']
+    accident = newAccident(row)
+    lt.addLast(accidents,accident)
+    
+
+def addAccidentMap (catalog,row):
+    Accident = newAccident(row)
+    #dateAcc = datetime.strptime(row['Start_Time'],'%Y-%m-%d %H:%M:%S')
+    catalog['AccidentsTree'] = map.put(catalog['AccidentsTree'], Accident['Date_Hour'], Accident, greater)
+
+
+
 
 def addBookMap (catalog, row):
     """
@@ -102,11 +130,12 @@ def rankBookMap (catalog, bookTitle):
     """
     return map.rank(catalog['booksTree'], bookTitle, greater)
 
-def selectBookMap (catalog, pos):
-    """
-    Retorna la operación select (titulos) dentro del arbol
-    """
-    return map.select(catalog['booksTree'], pos) 
+def rankAccidentMap (catalog, DateAccident):
+    dateAcc = datetime.strptime(DateAccident, '%Y-%m-%d %H:%M:%S')
+
+    return map.rank(catalog['AccidentsTree'], dateAcc, greater)
+
+
 
 
 # Funciones de comparacion

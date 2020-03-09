@@ -60,15 +60,19 @@ def loadBooks (catalog, sep=','):
     """
     t1_start = process_time() #tiempo inicial
     booksfile = cf.data_dir + 'GoodReads/books.csv'
+    #booksfile = cf.data_dir + 'Accidents/us_accidents_dis_2016.csv'
+
     dialect = csv.excel()
     dialect.delimiter=sep
     with open(booksfile, encoding="utf-8-sig") as csvfile:
         spamreader = csv.DictReader(csvfile, dialect=dialect)
         for row in spamreader: 
             # Se adiciona el libro a la lista de libros
-            model.addBookList(catalog, row)
+            #model.addAccidentList(catalog, row)
+            model.addBookList(catalog,row)
             # Se adiciona el libro al mapa de libros (key=title)
-            model.addBookMap(catalog, row)
+            #model.addAccidentMap(catalog, row)
+            model.addBookMap(catalog,row)
     t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución carga libros:",t1_stop-t1_start," segundos")   
 '''
@@ -80,7 +84,7 @@ def loadAccidents (catalog, sep=','):
     referencia al libro que se esta procesando.
     """
     t1_start = process_time() #tiempo inicial
-    accidentsfile = cf.data_dir + 'us_accidents_small.csv'
+    accidentsfile = cf.data_dir + 'us_accidents_dis_2016.csv'
     dialect = csv.excel()
     dialect.delimiter=sep
     with open(accidentsfile, encoding="utf-8-sig") as csvfile:
@@ -90,7 +94,9 @@ def loadAccidents (catalog, sep=','):
             #model.addBookList(catalog, row)
             # Se adiciona el libro al mapa de libros (key=title)
             #model.addBookMap(catalog, row)
-            model.addAccidentDateMap(catalog, row)
+           # model.addAccidentDateMap(catalog, row)
+           model.addAccidentMap(catalog, row)
+
     t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución carga libros:",t1_stop-t1_start," segundos")   
 
@@ -98,7 +104,9 @@ def initCatalog ():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalog()
+    #catalog = model.newCatalog()
+    catalog = model.newCatalog_2()
+
     return catalog
 
 
@@ -133,7 +141,15 @@ def rankBookMap(catalog, bookTitle):
 
 def selectBookMap(catalog, pos):
     t1_start = process_time() #tiempo inicial
-    rank=model.selectBookMap(catalog, pos) 
+    rank= model.selectBookMap(catalog, pos) 
     t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución buscar libro (rank):",t1_stop-t1_start," segundos")   
+    return rank
+
+def rankAccidentMap (catalog, Accident_Date):
+    t1_start = process_time() #tiempo inicial
+    fecha = Accident_Date+" 00:00:00"
+    rank = model.rankAccidentMap(catalog, fecha)
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución buscar accidente (date):",t1_stop-t1_start," segundos")
     return rank

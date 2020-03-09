@@ -42,7 +42,7 @@ def printMenu():
     print("1- Cargar información")
     print("2- Buscar libro por llave (titulo) ")
     print("3- Consultar cuantos libros hay alfabeticamente menores a una llave (titulo) - (rank)")
-    print("4- Buscar un libro por posición de la llave (titulo) - (select)")
+    print("4- Requerimiento 1 ")
     print("0- Salir")
 
 
@@ -89,14 +89,14 @@ def main():
             title = input("Nombre del titulo a buscar (rank): ")
             rank = controller.rankBookMap(catalog,title)
             print("Hay ",rank," titulos menores (rank) que "+title)
-        elif int(inputs[0])==4:
-            pos = int(input("Posición del k-esimo titulo del libro (select) a obtener: "))
-            book = controller.selectBookMap(catalog, pos)
-            if book:
-                print("Libro en posición:",pos,":",book['value']['title'],book['value']['average_rating'])
-            else:
-                print("Libro no encotrado en posicion: ",pos)
 
+        elif int(inputs[0])==4:
+            date = input("fecha del accidente: ")
+            accident_rank = controller.rankAccidentMap(catalog, date)
+            if accident_rank:
+                print("Hay ", accident_rank, " fechas menones a " + date )
+            else:
+                print("Libro no encotrado en posicion: ",accident_rank)
         else:
             sys.exit(0)
     sys.exit(0)

@@ -44,6 +44,11 @@ def newCatalog():
 
     return catalog
 
+def newCatalog_2 ():
+    catalog = {'AccidentsTree': None, 'AccidentsList': None}
+    catalog['AccidentsTree'] = map.newMap ("BST")
+    catalog['AccidentsList'] = lt.newList("ARRAY_LIST")
+    return catalog
 
 def newBook (row):
     """
@@ -52,6 +57,10 @@ def newBook (row):
     book = {"book_id": row['book_id'], "title":row['title'], "average_rating":row['average_rating'], "ratings_count":row['ratings_count']}
     return book
 
+def newAccident (row):
+    accident = {'ID' : row['ID'], 'Date_Hour': row['Start_Time']}
+    return accident
+
 def addBookList (catalog, row):
     """
     Adiciona libro a la lista
@@ -59,6 +68,19 @@ def addBookList (catalog, row):
     books = catalog['booksList']
     book = newBook(row)
     lt.addLast(books, book)
+
+def addAccidentList (catalog,row):
+    accidents = catalog['AccidentsList']
+    accident = newAccident(row)
+    lt.addLast(accidents,accident)
+    
+
+def addAccidentMap (catalog,row):
+    Accident = newAccident(row)
+    catalog['AccidentsTree'] = map.put(catalog['AccidentsTree'],Accident['Date_Hour'],Accident, greater)
+
+
+
 
 def addBookMap (catalog, row):
     """
@@ -84,11 +106,11 @@ def rankBookMap (catalog, bookTitle):
     """
     return map.rank(catalog['booksTree'], bookTitle, greater)
 
-def selectBookMap (catalog, pos):
-    """
-    Retorna la operación select (titulos) dentro del arbol
-    """
-    return map.select(catalog['booksTree'], pos) 
+def rankAccidentMap (catalog, DateAccident):
+
+    return map.rank(catalog['AccidentsTree'], DateAccident, greater)
+
+
 
 
 # Funciones de comparacion

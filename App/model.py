@@ -53,13 +53,13 @@ def newCatalog():
     Inicializa catalogo
     '''
     catalog = {'accidentsDateTree':None}
-    catalog['accidentsDateTree'] = map.newMap('RBT')
+    catalog['accidentsDateTree'] = map.newMap('BST')
     catalog
     return catalog
 
 def newCatalog_2 ():
     catalog = {'AccidentsTree': None, 'AccidentsList': None}
-    catalog['AccidentsTree'] = map.newMap ("RBT")
+    catalog['AccidentsTree'] = map.newMap ("BST")
     catalog['AccidentsList'] = lt.newList("ARRAY_LIST")
     return catalog
 
@@ -83,13 +83,7 @@ def newAccident (row):
     accident = {'ID' : row['ID'], 'Date_Hour': dateAcc}
     return accident
 
-def addBookList (catalog, row):
-    """
-    Adiciona libro a la lista
-    """
-    books = catalog['booksList']
-    book = newBook(row)
-    lt.addLast(books, book)
+
 
 def addAccidentList (catalog,row):
     accidents = catalog['AccidentsList']
@@ -105,30 +99,14 @@ def addAccidentMap (catalog,row):
 
 
 
-def addBookMap (catalog, row):
-    """
-    Adiciona libro al map con key=title
-    """
-    book = newBook(row)
-    #catalog['booksTree'] = map.put(catalog['booksTree'], int(book['book_id']), book, greater)
-    catalog['booksTree']  = map.put(catalog['booksTree'] , book['title'], book, greater)
+
   
 
 
 # Funciones de consulta
 
 
-def getBookMap (catalog, bookTitle):
-    """
-    Retorna el libro desde el mapa a partir del titulo (key)
-    """
-    return map.get(catalog['booksTree'], bookTitle, greater)
 
-def rankBookMap (catalog, bookTitle):
-    """
-    Retorna la cantidad de llaves menores (titulos) dentro del arbol
-    """
-    return map.rank(catalog['booksTree'], bookTitle, greater)
 
 def rankAccidentMap (catalog, DateAccident):
     dateAcc = datetime.strptime(DateAccident, '%Y-%m-%d %H:%M:%S')

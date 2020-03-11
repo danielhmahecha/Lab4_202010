@@ -41,8 +41,6 @@ def printMenu():
     print("Bienvenido al Laboratorio 4")
     print("1- Cargar información")
     print("2- Buscar accidentes anteriores a una fecha")
-    print("3- ")
-    print("4- ")
     print("0- Salir")
 
 
@@ -73,7 +71,7 @@ def main():
             print("Recursion Limit:",sys.getrecursionlimit())
             catalog = initCatalog ()
             loadData (catalog)
-            print ('Arbol Libros cargados: ' + str(map.size(catalog['AccidentsTree'])))
+            print ('Arbol Accidentes cargados: ' + str(map.size(catalog['AccidentsTree'])))
             #print ('Lista libros cargados: ' + str(lt.size(catalog['booksList'])))
             print ('Altura arbol: ' + str(map.height(catalog['AccidentsTree'])))
             
@@ -84,19 +82,6 @@ def main():
                 print("Hay ", accident_rank, " accidentes en fechas menores a " + date )
             else:
                 print("Fecha fuera de limites: ",accident_rank)
-
-        elif int(inputs[0])==3:
-            title = input("Nombre del titulo a buscar (rank): ")
-            rank = controller.rankBookMap(catalog,title)
-            print("Hay ",rank," titulos menores (rank) que "+title)
-
-        elif int(inputs[0])==4:
-            date = input("fecha del accidente: ")
-            accident_rank = controller.rankAccidentMap(catalog, date)
-            if accident_rank:
-                print("Hay ", accident_rank, " en fechas menores a " + date )
-            else:
-                print("Libro no encotrado en posicion: ",accident_rank)
         else:
             sys.exit(0)
     sys.exit(0)

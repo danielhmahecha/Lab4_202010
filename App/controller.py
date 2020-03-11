@@ -28,6 +28,7 @@ from ADT import map as map
 from DataStructures import listiterator as it
 from Sorting import mergesort as sort
 from time import process_time
+import datetime 
 
 
 """
@@ -120,36 +121,12 @@ def loadData (catalog):
 
 # Funciones llamadas desde la vista y enviadas al modelo
 
-
-def getBookMap(catalog, bookTitle):
-    t1_start = process_time() #tiempo inicial
-    #book=model.getBookInList(catalog, bookTitle)
-    book=model.getBookMap(catalog, bookTitle) 
-    t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución buscar libro:",t1_stop-t1_start," segundos")   
-    if book:
-        return book
-    else:
-        return None
-
-def rankBookMap(catalog, bookTitle):
-    t1_start = process_time() #tiempo inicial
-    rank=model.rankBookMap(catalog, bookTitle)  
-    t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución buscar libro (rank):",t1_stop-t1_start," segundos")   
-    return rank
-
-def selectBookMap(catalog, pos):
-    t1_start = process_time() #tiempo inicial
-    rank= model.selectBookMap(catalog, pos) 
-    t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución buscar libro (rank):",t1_stop-t1_start," segundos")   
-    return rank
-
 def rankAccidentMap (catalog, Accident_Date):
-    t1_start = process_time() #tiempo inicial
+    a = datetime.datetime.now() #tiempo inicial
     fecha = Accident_Date+" 00:00:00"
     rank = model.rankAccidentMap(catalog, fecha)
-    t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución buscar accidente (date):",t1_stop-t1_start," segundos")
+    b = datetime.datetime.now()
+    c = b - a
+
+    print("Tiempo de ejecución buscar accidente (date):",str(c)," segundos")
     return rank
